@@ -15,8 +15,8 @@ const inter = localFont({
 });
 
 const spaceGrotesk = localFont({
-  src: "./fonts/SpaceGrotesk.ttf",
-  variable: "--font-space--grotesk",
+  src: "./fonts/SpaceGroteskVF.ttf",
+  variable: "--font-space-grotesk",
   weight: "300 400 500 600 700",
 });
 export const metadata: Metadata = {
