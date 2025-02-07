@@ -1,9 +1,48 @@
 import LocalSearch from "@/components/search/LocalSearch";
 import { Button } from "@/components/ui/button";
 import ROUTES from "@/constants/routes";
+import { SearchParams } from "next/dist/server/request/search-params";
 import Link from "next/link";
+const questions = [
+  {
+    _id: "1",
+    title: "How to learn React?",
+    description: "I want to learn React, can anyone help me?",
+    tags: [
+      { _id: "1", name: "React" },
+      { _id: "2", name: "JavaScript" },
+    ],
+    author: { _id: "1", name: "John Doe" },
+    upvotes: 10,
+    answers: 5,
+    views: 100,
+    createdAt: new Date(),
+  },
+  {
+    _id: "2",
+    title: "How to learn JavaScript?",
+    description: "I want to learn JavaScript, can anyone help me?",
+    tags: [
+      { _id: "1", name: "React" },
+      { _id: "2", name: "JavaScript" },
+    ],
+    author: { _id: "1", name: "John Doe" },
+    upvotes: 10,
+    answers: 5,
+    views: 100,
+    createdAt: new Date(),
+  },
+];
+interface SearchParams {
+  searchParams: Promise<{ [key: string]: string }>;
+}
 
-const Home = async () => {
+const Home = async ({ searchParams }: SearchParams) => {
+  const { query = "" } = await searchParams;
+  const filteredQuestions = questions.filter((question) =>
+    question.title.toLowerCase().includes(query?.toLowerCase())
+  );
+
   return (
     <>
       <section
@@ -30,10 +69,9 @@ const Home = async () => {
       </section>
       home FIlter
       <div className="mt-10 flex w-full flex-col gap-6">
-        <p>question 1</p>
-        <p>question 2</p>
-        <p>question 3</p>
-        <p>question 4</p>
+        {filteredQuestions.map((question) => (
+          <h1 key={question._id}>{question.title}</h1>
+        ))}
       </div>
     </>
   );
